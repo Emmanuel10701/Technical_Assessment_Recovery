@@ -7,7 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from .models import Chat
-from .serializers import UserSerializer, ChatSerializer
+from .serializers import UserSerializer
 
 User = get_user_model()
 
