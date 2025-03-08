@@ -1,101 +1,87 @@
+"use client";
+import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { FaDatabase, FaRobot, FaComments, FaSearch } from "react-icons/fa";
 
-export default function Home() {
+const features = [
+  {
+    title: "Instant AI Responses",
+    description: "Chat with our AI assistant to get quick and intelligent answers.",
+    icon: <FaRobot className="text-blue-500 text-4xl" />, 
+  },
+  {
+    title: "Seamless Conversations",
+    description: "Engage in natural and interactive dialogues powered by AI.",
+    icon: <FaComments className="text-blue-500 text-4xl" />,
+  },
+  {
+    title: "Data-Driven Insights",
+    description: "Receive insights and recommendations based on your chat history.",
+    icon: <FaDatabase className="text-blue-500 text-4xl" />,
+  },
+  {
+    title: "Advanced Search",
+    description: "Quickly find relevant information during your conversation.",
+    icon: <FaSearch className="text-blue-500 text-4xl" />,
+  },
+];
+
+export default function Home({ data }) {
+  const router = useRouter();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="font-poppins transition-all duration-300 bg-gray-50 text-gray-900">
+      <header className="relative text-center py-16 bg-blue-50 transition-all duration-300">
+        <div className="flex flex-col-reverse md:flex-row items-center mx-4 md:mx-40 mt-10">
+          <div className="md:w-1/2">
+            <h1 className="mb-4 text-5xl font-bold text-gray-900 transition-all duration-300">
+              Experience <span className="text-blue-600">AI Chat</span>
+            </h1>
+            <p className="mb-8 max-w-xl mx-auto leading-relaxed text-gray-500 transition-all duration-300">
+              Connect with our AI chat assistant for real-time conversations, intelligent responses, and a personalized experience.
+            </p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => router.push("/login")}
+                className="px-8 py-3 font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 transition duration-300"
+              >
+                Login
+              </button>
+              <a href="#features">
+                <button className="px-8 py-3 font-medium text-blue-600 border-2 border-blue-600 rounded-full hover:bg-blue-100 transition duration-300">
+                  Learn More
+                </button>
+              </a>
+            </div>
+          </div>
+          <div className="md:w-1/2">
+            <Image src="/lady.png" alt="AI Chat" width={500} height={500} />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </header>
+
+      <section id="features" className="py-16 px-4 mx-4 md:px-12 bg-gray-100 transition-all duration-300">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500 transition-all duration-300">
+            Why Choose <span className="text-green-600">Our AI Chat</span>?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="p-6 shadow-md rounded-lg transition-transform duration-500 transform hover:scale-105 flex flex-col items-center bg-white text-gray-900"
+              >
+                <span className="flex items-center justify-center mb-4 p-4 rounded-full bg-blue-100 text-blue-500">
+                  {feature.icon}
+                </span>
+                <h4 className="mb-2 text-lg font-bold">{feature.title}</h4>
+                <p className="text-gray-500">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
