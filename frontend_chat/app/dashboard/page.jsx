@@ -210,7 +210,7 @@ export default function Dashboard() {
             {/* Chat Header */}
             <div className="flex justify-between items-center mb-2">
               <h3 className="text-lg font-semibold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
-                Chat with Chat
+                Chat with AI Assistance
               </h3>
               <button onClick={() => setChatOpen(false)} className="text-white text-xl">
                 <FaTimes />
