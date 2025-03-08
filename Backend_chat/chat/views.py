@@ -28,22 +28,10 @@ class UserViewSet(viewsets.ModelViewSet):
         user = User.objects.create(
             username=username,
             password=make_password(password),
-            tokens=4000
+            tokens=4000  # Initial token balance
         )
         token, _ = Token.objects.get_or_create(user=user)
         return Response({'token': token.key, 'message': 'User registered successfully'})
-
-
-class UserDetailViewSet(viewsets.ViewSet):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    @action(detail=False, methods=['get'])
-    def details(self, request):
-        return Response({
-            "username": request.user.username,
-            "tokens": request.user.tokens,
-        })
 
 class AuthViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
@@ -72,17 +60,30 @@ class ChatViewSet(viewsets.ViewSet):
         if user.tokens < 100:
             return Response({'error': 'Insufficient tokens'}, status=400)
 
+        # Generate AI response (replace with actual AI integration)
+        response = f"This is a dummy AI response for you accessing the chat as {user.username}."
+
+        # Deduct 100 tokens only after generating response
         user.tokens -= 100
         user.save()
-
-        response = "This is a dummy AI response."  # Replace with real AI integration
+        # Store the chat
         chat = Chat.objects.create(user=user, message=message, response=response)
-        
         return Response({'message': message, 'response': response, 'remaining_tokens': user.tokens})
+class UserDetailViewSet(viewsets.ViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    @action(detail=False, methods=['get'])
+    def details(self, request):
+        return Response({
+            "username": request.user.username,
+            "tokens": request.user.tokens,
+        })
 
 class TokenBalanceViewSet(viewsets.ViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
     @action(detail=False, methods=['get'])
     def balance(self, request):
         return Response({'tokens': request.user.tokens})
