@@ -165,7 +165,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 w-full max-w-4xl my-10">
             <div className="p-4 bg-blue-500 text-white rounded-lg shadow-md">
               <h2 className="text-lg font-semibold">Username</h2>
-              Welcome, <strong>{userDetails.username}</strong>!
+              Welcome, <strong className="capitalize">{userDetails.username}</strong>
               </div>
             <div className="p-4 bg-purple-500 text-white rounded-lg shadow-md">
               <h2 className="text-lg font-semibold">Tokens Balance</h2>
