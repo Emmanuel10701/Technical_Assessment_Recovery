@@ -36,7 +36,7 @@ export default function Dashboard() {
     }
 
     axios
-      .get("http://127.0.0.1:8000/api/user/details/", {
+      .get("http://127.0.0.1:8000/api/user-details/details", {
         headers: { Authorization: `Token ${token}` },
       })
       .then((response) => {
