@@ -29,6 +29,7 @@ with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) a
         # Initialize variables
         right_hand_gesture = "No Gesture"
         left_hand_finger_names = ""
+        left_hand_finger_count = 0
 
         # If hands are detected
         if result.multi_hand_landmarks:
@@ -50,10 +51,7 @@ with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) a
                 thumb_up = hand_landmarks.landmark[thumb_tip].y < hand_landmarks.landmark[thumb_tip - 1].y
                 if thumb_up:
                     fingers_up += 1
-                
-                # Increase count by 2
-                fingers_up += 2
-                
+
                 if is_right_hand:
                     # Extended Gesture Recognition
                     if fingers_up == 1 and thumb_up:
@@ -77,33 +75,30 @@ with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) a
                     elif fingers_up == 1 and not thumb_up:
                         right_hand_gesture = "🤞🏻 Together"
                     elif fingers_up == 5 and not thumb_up:
-                        right_hand_gesture = "🖐🏻 Open Palm"
+                        right_hand_gesture = "🖐🏻 Open Palm"9
                     elif fingers_up == 5 and thumb_up:
-                        right_hand_gesture = "☝🏻 Pointing up"
+                        right_hand_gesture = " Offering"
 
                     gesture_history.append(right_hand_gesture)
-                
+
                 if is_left_hand:
                     raised_fingers = [finger_names[i] for i, tip in enumerate(finger_tips) if hand_landmarks.landmark[tip].y < hand_landmarks.landmark[tip - 2].y]
                     if hand_landmarks.landmark[thumb_tip].y < hand_landmarks.landmark[thumb_tip - 1].y:
                         raised_fingers.append("Thumb")
                     left_hand_finger_names = ", ".join(raised_fingers) if raised_fingers else "No Fingers Raised"
+                    left_hand_finger_count = len(raised_fingers)
 
-        # Display statistics in a box
+        # Modern Statistics Display
         overlay = frame.copy()
-        box_color = (0, 0, 0)  # Black background
-        text_color = (255, 255, 255)  # White text
-        
-        cv2.rectangle(overlay, (10, 10), (300, 80), box_color, -1)
-        cv2.rectangle(overlay, (frame.shape[1] - 310, 10), (frame.shape[1] - 10, 80), box_color, -1)
+        cv2.rectangle(overlay, (frame.shape[1] - 310, 10), (frame.shape[1] - 10, 100), (0, 0, 0), -1)
+        cv2.rectangle(overlay, (10, frame.shape[0] - 100), (310, frame.shape[0] - 10), (0, 0, 0), -1)
         alpha = 0.6
         frame = cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0)
 
-        cv2.putText(frame, "Right Hand", (frame.shape[1] - 290, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, text_color, 1, cv2.LINE_AA)
-        cv2.putText(frame, f"Gesture: {right_hand_gesture}", (frame.shape[1] - 290, 65), cv2.FONT_HERSHEY_SIMPLEX, 0.5, text_color, 1, cv2.LINE_AA)
-        
-        cv2.putText(frame, "Left Hand", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, text_color, 1, cv2.LINE_AA)
-        cv2.putText(frame, f"Fingers: {left_hand_finger_names}", (20, 65), cv2.FONT_HERSHEY_SIMPLEX, 0.5, text_color, 1, cv2.LINE_AA)
+        cv2.putText(frame, "Right Hand Stats", (frame.shape[1] - 290, 40), cv2.FONT_HERSHEY_TRIPLEX, 0.6, (255, 255, 255), 1, cv2.LINE_AA)
+        cv2.putText(frame, f"Gesture: {right_hand_gesture}", (frame.shape[1] - 290, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
+        cv2.putText(frame, "Left Hand Stats", (20, frame.shape[0] - 80), cv2.FONT_HERSHEY_TRIPLEX, 0.6, (255, 255, 255), 1, cv2.LINE_AA)
+        cv2.putText(frame, f"Fingers: {left_hand_finger_names} ({left_hand_finger_count})", (20, frame.shape[0] - 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
         
         cv2.imshow("Hand Gesture Recognition", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
